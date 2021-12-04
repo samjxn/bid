@@ -1,5 +1,6 @@
 import 'package:bid/src/models/player.sg.dart';
 import 'package:bid/src/models/scoreboard.sg.dart';
+import 'package:bid/src/widgets/scoreboard_item.dart';
 import 'package:flutter/material.dart';
 import 'package:quiver/iterables.dart';
 
@@ -29,13 +30,7 @@ class ScoreboardWidget extends StatelessWidget {
         final rowNum = e.index;
         final scoreEntry = e.value;
         rowChildren[rowNum].add(
-          Center(
-            child: Text(
-              'bid: ${scoreEntry.bid ?? 0}, '
-              '${scoreEntry.score}'
-              '${scoreEntry.broke ? ', broke' : ''}',
-            ),
-          ),
+          ScoreboardItem(scoreEntry),
         );
       }
     }
