@@ -21,9 +21,32 @@ class ScoreboardWidget extends StatelessWidget {
   }
 
   List<TableRow> _renderRows() {
+    // TODO: assign roundNumber differently. you're better than this.
+    final roundNumber = _scoreboard.scoreboard.entries.first.value.length;
     final rowChildren = List<List<Widget>>.generate(
-        _scoreboard.scoreboard.entries.first.value.length,
-        (i) => <Widget>[(Center(child: Text(mapRoundToHand(i).toString())))]);
+        roundNumber,
+        (i) => <Widget>[
+              SizedBox(
+                height: 50.0,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text('${mapRoundToHand(i)}'),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ]);
     for (final mapEntry in _scoreboard.scoreboard.entries) {
       final playerScores = mapEntry.value;
       for (final e in enumerate(playerScores)) {
@@ -43,6 +66,9 @@ class ScoreboardWidget extends StatelessWidget {
     return Table(
       border: TableBorder.all(
           color: Colors.black, style: BorderStyle.solid, width: 2),
+      columnWidths: const {
+        0: IntrinsicColumnWidth(),
+      },
       children: [
         TableRow(
           children:
