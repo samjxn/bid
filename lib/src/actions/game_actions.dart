@@ -1,0 +1,3 @@
+class UpdateBidder {}
+
+class UpdateDealer {}
