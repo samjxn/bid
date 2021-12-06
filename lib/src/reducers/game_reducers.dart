@@ -21,6 +21,7 @@ BidState _nextDealer(BidState state, UpdateDealer _) {
   stateBuilder.game.dealerIndex = state.game.nextDealer;
   stateBuilder.game.bidderIndex =
       (state.game.nextDealer + 1) % state.game.players.length;
+  stateBuilder.game.round = state.game.round + 1;
 
   return stateBuilder.build();
 }

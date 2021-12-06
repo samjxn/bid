@@ -34,7 +34,7 @@ BidState _setPlayersTrickCounts(BidState state, SetPlayersTrickCounts action) {
   final scoreboardState = state.game.scoreboard;
   final playersToTricks = action.playersToTricks;
 
-  for (final player in state.game.players) {
+  for (final player in action.playersToTricks.keys) {
     final playerScores = scoreboardState.scoreboard[player.id]?.toBuilder();
     if (playerScores == null) continue;
 

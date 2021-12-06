@@ -1,5 +1,6 @@
 import 'package:bid/src/models/player.sg.dart';
 import 'package:bid/src/models/scoreboard.sg.dart';
+import 'package:bid/src/utils/utils.dart';
 import 'package:bid/src/widgets/scoreboard_item.dart';
 import 'package:flutter/material.dart';
 import 'package:quiver/iterables.dart';
@@ -13,12 +14,6 @@ class ScoreboardWidget extends StatelessWidget {
     this._players, {
     Key? key,
   }) : super(key: key);
-
-  int mapRoundToHand(int round) {
-    if (round < 6) return 7 - round;
-
-    return round - 6;
-  }
 
   List<TableRow> _renderRows() {
     // TODO: assign roundNumber differently. you're better than this.

@@ -15,8 +15,11 @@ abstract class Game implements Built<Game, GameBuilder> {
   int get dealerIndex;
   int? get bidderIndex;
 
-  int? get nextBidder =>
-      bidderIndex == null ? null : (bidderIndex! + 1) % players.length;
+  int? get nextBidder {
+    if (bidderIndex == dealerIndex) return null;
+
+    return bidderIndex == null ? null : (bidderIndex! + 1) % players.length;
+  }
 
   int get nextDealer => (dealerIndex + 1) % players.length;
 
@@ -33,6 +36,6 @@ abstract class Game implements Built<Game, GameBuilder> {
       ..scoreboard = Scoreboard(players.map((e) => e.id)).toBuilder()
       ..players = ListBuilder(players)
       ..dealerIndex = dealerPosition
-      ..round = 4);
+      ..round = 3);
   }
 }

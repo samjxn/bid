@@ -18,30 +18,29 @@ class BidApp extends StatelessWidget {
       store: _store,
       child: MaterialApp(
         theme: ThemeData(
-          primarySwatch: material.Colors.grey,
+          primarySwatch: material.Colors.purple,
         ),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        home: const MyHomePage(),
       ),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
+  const MyHomePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<BidState, Game>(
-      builder: (context, game) => Scaffold(
-        appBar: AppBar(
-          title: Title(
-            color: material.Colors.grey,
-            child: const Text('Bid Your Tricks'),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Title(
+          color: material.Colors.grey,
+          child: const Text('Bid Your Tricks'),
         ),
-        body: Column(
+      ),
+      body: StoreConnector<BidState, Game>(
+        converter: (store) => store.state.game,
+        builder: (context, game) => Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ScoreboardWidget(
               game.scoreboard,
@@ -51,7 +50,6 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
-      converter: (store) => store.state.game,
     );
   }
 }

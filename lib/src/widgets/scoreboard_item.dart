@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class ScoreboardItem extends StatelessWidget {
   final ScoreboardEntry entry;
 
-  int get bid => entry.bid ?? 0;
+  int? get bid => entry.bid;
   int? get tricks => entry.tricks;
 
   bool get broke => tricks != null && bid != tricks;
@@ -25,17 +25,18 @@ class ScoreboardItem extends StatelessWidget {
               style: const TextStyle(fontSize: 12.0, color: Colors.red),
             ),
           ),
-        Padding(
-          padding: const EdgeInsets.only(right: 1.5),
-          child: Text(
-            '$bid',
-            style: TextStyle(
-              fontSize: 12.0,
-              decoration: broke ? TextDecoration.lineThrough : null,
-              color: broke ? null : Colors.green,
+        if (bid != null)
+          Padding(
+            padding: const EdgeInsets.only(right: 1.5),
+            child: Text(
+              '$bid',
+              style: TextStyle(
+                fontSize: 12.0,
+                decoration: broke ? TextDecoration.lineThrough : null,
+                color: broke ? null : Colors.green,
+              ),
             ),
           ),
-        ),
       ],
     );
   }
