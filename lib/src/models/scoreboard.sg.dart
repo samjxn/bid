@@ -12,71 +12,11 @@ abstract class Scoreboard implements Built<Scoreboard, ScoreboardBuilder> {
       _$Scoreboard((ScoreboardBuilder b) {
         b.scoreboard = MapBuilder<String, BuiltList<ScoreboardEntry>>();
 
-        final scores = <List<List<int>>>[
-          [
-            [3, 2],
-            [1, 1],
-            [0, 0],
-            [0, 1]
-          ],
-          [
-            [1, 1],
-            [1, 1],
-            [0, 1],
-            [1, 1]
-          ],
-          [
-            [0, 0],
-            [2, 2],
-            [1, 1],
-            [1, 1]
-          ],
-          [
-            [2, 2],
-            [1, 1],
-            [2, 2],
-            [1, 0]
-          ],
-          [
-            [1, 1],
-            [1, 0],
-            [2, 1],
-            [0, 0]
-          ],
-          [
-            [1, 0],
-            [1, 0],
-            [1, 0],
-            [1, 1]
-          ],
-          [
-            [1, 1],
-            [1, 1],
-            [0, 0],
-            [1, 0]
-          ],
-        ];
-
         final idsToItems = <String, ListBuilder<ScoreboardEntry>>{};
         for (final playerId in playerIds) {
-          List<List<int>> scoreList =
-              scores.isNotEmpty ? scores.removeLast() : <List<int>>[];
-
-          ScoreboardEntry? previous;
-          for (final bidScorePair in scoreList) {
-            final entry = ScoreboardEntry(
-                previousScore: previous?.score ?? 0,
-                bid: bidScorePair.first,
-                tricks: bidScorePair.last);
-            idsToItems[playerId] ??= ListBuilder<ScoreboardEntry>();
-            idsToItems[playerId]!.add(entry);
-            previous = entry;
-          }
+          b.scoreboard[playerId] =
+              ListBuilder<ScoreboardEntry>([ScoreboardEntry()]).build();
         }
-
-        b.scoreboard.addEntries(idsToItems.entries.map((e) =>
-            MapEntry<String, BuiltList<ScoreboardEntry>>(
-                e.key, e.value.build())));
       });
 }
 

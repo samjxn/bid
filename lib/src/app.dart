@@ -39,8 +39,7 @@ class MyHomePage extends StatelessWidget {
       ),
       body: StoreConnector<BidState, Game>(
         converter: (store) => store.state.game,
-        builder: (context, game) => Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        builder: (context, game) => ListView(
           children: [
             ScoreboardWidget(
               game.scoreboard,

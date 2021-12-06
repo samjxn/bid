@@ -27,6 +27,9 @@ abstract class Game implements Built<Game, GameBuilder> {
 
   int get round;
 
+  @memoized
+  int get hand => round <= 6 ? 7 - round : round - 6;
+
   Game._();
 
   factory Game(List<Player> players, {required Player dealer}) {
@@ -36,6 +39,7 @@ abstract class Game implements Built<Game, GameBuilder> {
       ..scoreboard = Scoreboard(players.map((e) => e.id)).toBuilder()
       ..players = ListBuilder(players)
       ..dealerIndex = dealerPosition
+      ..bidderIndex = (dealerPosition + 1) % players.length
       ..round = 3);
   }
 }

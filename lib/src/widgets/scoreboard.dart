@@ -1,6 +1,5 @@
 import 'package:bid/src/models/player.sg.dart';
 import 'package:bid/src/models/scoreboard.sg.dart';
-import 'package:bid/src/utils/utils.dart';
 import 'package:bid/src/widgets/scoreboard_item.dart';
 import 'package:flutter/material.dart';
 import 'package:quiver/iterables.dart';
@@ -18,6 +17,7 @@ class ScoreboardWidget extends StatelessWidget {
   List<TableRow> _renderRows() {
     // TODO: assign roundNumber differently. you're better than this.
     final roundNumber = _scoreboard.scoreboard.entries.first.value.length;
+    final hands = [7, 6, 5, 4, 3, 2, 1, 1, 2, 3, 4, 5, 6, 7]; // this is bad.
     final rowChildren = List<List<Widget>>.generate(
         roundNumber,
         (i) => <Widget>[
@@ -33,7 +33,7 @@ class ScoreboardWidget extends StatelessWidget {
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text('${mapRoundToHand(i)}'),
+                            child: Text('${hands.removeAt(0)}'),
                           )
                         ],
                       ),

@@ -61,7 +61,8 @@ class ScoreboardItem extends StatelessWidget {
                   children: [
                     if (broke)
                       SizedBox(
-                        width: 30.0,
+                        width: 30,
+                        height: 30,
                         child: Container(
                           padding: const EdgeInsets.all(2.0),
                           decoration: BoxDecoration(
