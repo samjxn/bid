@@ -1,4 +1,6 @@
 import 'package:bid/src/actions/game_actions.dart';
+import 'package:bid/src/actions/scoreboard_actions.dart';
+import 'package:bid/src/state/store.dart';
 import 'package:redux/redux.dart';
 import 'package:bid/src/state/state.sg.dart';
 
@@ -21,4 +23,13 @@ BidState _nextDealer(BidState state, UpdateDealer _) {
       (state.game.nextDealer + 1) % state.game.players.length;
 
   return stateBuilder.build();
+}
+
+List<Middleware<BidState>> gameMiddleware = [
+  TypedMiddleware<BidState, NextHand>(_onNextHand),
+];
+
+void _onNextHand(Store<BidState> store, NextHand _, NextDispatcher next) {
+  store.dispatch(PrepareNextRow());
+  store.dispatch(UpdateDealer());
 }

@@ -70,7 +70,7 @@ class ScoreboardItem extends StatelessWidget {
                           child: Center(child: Text('${entry.score}')),
                         ),
                       ),
-                    if (!broke) Text('${entry.score}'),
+                    if (!broke && entry.tricks != null) Text('${entry.score}'),
                   ],
                 ),
               ),

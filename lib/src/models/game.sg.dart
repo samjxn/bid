@@ -28,12 +28,11 @@ abstract class Game implements Built<Game, GameBuilder> {
 
   factory Game(List<Player> players, {required Player dealer}) {
     final dealerPosition = max(players.indexOf(dealer), 0);
-    final bidderPosition = (dealerPosition + 1) % players.length;
 
     return _$Game((GameBuilder b) => b
       ..scoreboard = Scoreboard(players.map((e) => e.id)).toBuilder()
       ..players = ListBuilder(players)
       ..dealerIndex = dealerPosition
-      ..bidderIndex = bidderPosition);
+      ..round = 4);
   }
 }

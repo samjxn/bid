@@ -8,6 +8,7 @@ class BidStore extends Store<BidState> {
       : super(
           bidStateReducer,
           initialState: initialState,
+          middleware: gameMiddleware,
         );
 }
 

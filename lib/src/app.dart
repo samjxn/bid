@@ -3,7 +3,10 @@ import 'package:bid/src/state/state.sg.dart';
 import 'package:bid/src/state/store.dart';
 import 'package:bid/src/widgets/scoreboard.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:flutter_redux/flutter_redux.dart';
+
+import 'widgets/game_input.dart';
 
 class BidApp extends StatelessWidget {
   final BidStore _store;
@@ -14,9 +17,8 @@ class BidApp extends StatelessWidget {
     return StoreProvider(
       store: _store,
       child: MaterialApp(
-        title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: material.Colors.grey,
         ),
         home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
@@ -33,9 +35,20 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<BidState, Game>(
       builder: (context, game) => Scaffold(
-        body: ScoreboardWidget(
-          game.scoreboard,
-          Map.fromIterable(game.players, key: (p) => p.id),
+        appBar: AppBar(
+          title: Title(
+            color: material.Colors.grey,
+            child: const Text('Bid Your Tricks'),
+          ),
+        ),
+        body: Column(
+          children: [
+            ScoreboardWidget(
+              game.scoreboard,
+              {for (final p in game.players) p.id: p},
+            ),
+            GameInput(game),
+          ],
         ),
       ),
       converter: (store) => store.state.game,
