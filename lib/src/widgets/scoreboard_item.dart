@@ -59,13 +59,17 @@ class ScoreboardItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     if (broke)
-                      Container(
+                      SizedBox(
+                        width: 30.0,
+                        child: Container(
                           padding: const EdgeInsets.all(2.0),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(color: Colors.red),
                           ),
-                          child: Text('${entry.score}')),
+                          child: Center(child: Text('${entry.score}')),
+                        ),
+                      ),
                     if (!broke) Text('${entry.score}'),
                   ],
                 ),

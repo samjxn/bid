@@ -15,6 +15,8 @@ class _$Game extends Game {
   final int dealerIndex;
   @override
   final int? bidderIndex;
+  @override
+  final int round;
 
   factory _$Game([void Function(GameBuilder)? updates]) =>
       (new GameBuilder()..update(updates)).build();
@@ -23,11 +25,13 @@ class _$Game extends Game {
       {required this.scoreboard,
       required this.players,
       required this.dealerIndex,
-      this.bidderIndex})
+      this.bidderIndex,
+      required this.round})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(scoreboard, 'Game', 'scoreboard');
     BuiltValueNullFieldError.checkNotNull(players, 'Game', 'players');
     BuiltValueNullFieldError.checkNotNull(dealerIndex, 'Game', 'dealerIndex');
+    BuiltValueNullFieldError.checkNotNull(round, 'Game', 'round');
   }
 
   @override
@@ -44,15 +48,18 @@ class _$Game extends Game {
         scoreboard == other.scoreboard &&
         players == other.players &&
         dealerIndex == other.dealerIndex &&
-        bidderIndex == other.bidderIndex;
+        bidderIndex == other.bidderIndex &&
+        round == other.round;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, scoreboard.hashCode), players.hashCode),
-            dealerIndex.hashCode),
-        bidderIndex.hashCode));
+        $jc(
+            $jc($jc($jc(0, scoreboard.hashCode), players.hashCode),
+                dealerIndex.hashCode),
+            bidderIndex.hashCode),
+        round.hashCode));
   }
 
   @override
@@ -61,7 +68,8 @@ class _$Game extends Game {
           ..add('scoreboard', scoreboard)
           ..add('players', players)
           ..add('dealerIndex', dealerIndex)
-          ..add('bidderIndex', bidderIndex))
+          ..add('bidderIndex', bidderIndex)
+          ..add('round', round))
         .toString();
   }
 }
@@ -88,6 +96,10 @@ class GameBuilder implements Builder<Game, GameBuilder> {
   int? get bidderIndex => _$this._bidderIndex;
   set bidderIndex(int? bidderIndex) => _$this._bidderIndex = bidderIndex;
 
+  int? _round;
+  int? get round => _$this._round;
+  set round(int? round) => _$this._round = round;
+
   GameBuilder();
 
   GameBuilder get _$this {
@@ -97,6 +109,7 @@ class GameBuilder implements Builder<Game, GameBuilder> {
       _players = $v.players.toBuilder();
       _dealerIndex = $v.dealerIndex;
       _bidderIndex = $v.bidderIndex;
+      _round = $v.round;
       _$v = null;
     }
     return this;
@@ -123,7 +136,9 @@ class GameBuilder implements Builder<Game, GameBuilder> {
               players: players.build(),
               dealerIndex: BuiltValueNullFieldError.checkNotNull(
                   dealerIndex, 'Game', 'dealerIndex'),
-              bidderIndex: bidderIndex);
+              bidderIndex: bidderIndex,
+              round: BuiltValueNullFieldError.checkNotNull(
+                  round, 'Game', 'round'));
     } catch (_) {
       late String _$failedField;
       try {

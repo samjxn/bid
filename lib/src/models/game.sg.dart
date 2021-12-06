@@ -22,6 +22,8 @@ abstract class Game implements Built<Game, GameBuilder> {
 
   bool get isBidding => bidderIndex != null;
 
+  int get round;
+
   Game._();
 
   factory Game(List<Player> players, {required Player dealer}) {
