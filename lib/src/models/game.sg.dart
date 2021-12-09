@@ -40,6 +40,6 @@ abstract class Game implements Built<Game, GameBuilder> {
       ..players = ListBuilder(players)
       ..dealerIndex = dealerPosition
       ..bidderIndex = (dealerPosition + 1) % players.length
-      ..round = 3);
+      ..round = 0);
   }
 }

@@ -167,7 +167,11 @@ class GameInput extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
-                      '${game.hand - totalTricks} more trick${game.hand - totalTricks == 1 ? '' : 's'} need${game.hand - totalTricks == 1 ? 's' : ''} to be claimed.'),
+                    '${game.hand - totalTricks} more '
+                    'trick${game.hand - totalTricks == 1 ? '' : 's'} '
+                    'need${game.hand - totalTricks == 1 ? 's' : ''} '
+                    'to be claimed.',
+                  ),
                 ),
               if (tooManyTricks)
                 Container(
@@ -181,7 +185,7 @@ class GameInput extends StatelessWidget {
       );
     }, converter: (store) {
       return () {
-        store.dispatch(NextHand());
+        store.dispatch(game.round == 13 ? NewGame() : NextHand());
       };
     });
   }
