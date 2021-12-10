@@ -31,8 +31,7 @@ BidState _newGame(BidState state, NewGame action) {
   final stateBuilder = state.toBuilder();
   stateBuilder.game = Game(
     action.players?.toList() ?? state.game!.players.toList(),
-    dealer: action.players?.elementAt(action.dealerIndex ?? 0) ??
-        state.game!.players.first,
+    dealerPosition: action.dealerIndex ?? 0,
   ).toBuilder();
   return stateBuilder.build();
 }

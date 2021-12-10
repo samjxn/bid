@@ -8,14 +8,12 @@ part of 'state.sg.dart';
 
 class _$BidState extends BidState {
   @override
-  final Game game;
+  final Game? game;
 
   factory _$BidState([void Function(BidStateBuilder)? updates]) =>
       (new BidStateBuilder()..update(updates)).build();
 
-  _$BidState._({required this.game}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(game, 'BidState', 'game');
-  }
+  _$BidState._({this.game}) : super._();
 
   @override
   BidState rebuild(void Function(BidStateBuilder) updates) =>
@@ -54,7 +52,7 @@ class BidStateBuilder implements Builder<BidState, BidStateBuilder> {
   BidStateBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _game = $v.game.toBuilder();
+      _game = $v.game?.toBuilder();
       _$v = null;
     }
     return this;
@@ -75,12 +73,12 @@ class BidStateBuilder implements Builder<BidState, BidStateBuilder> {
   _$BidState build() {
     _$BidState _$result;
     try {
-      _$result = _$v ?? new _$BidState._(game: game.build());
+      _$result = _$v ?? new _$BidState._(game: _game?.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'game';
-        game.build();
+        _game?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'BidState', _$failedField, e.toString());

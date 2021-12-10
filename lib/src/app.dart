@@ -1,6 +1,7 @@
 import 'package:bid/src/models/game.sg.dart';
 import 'package:bid/src/state/state.sg.dart';
 import 'package:bid/src/state/store.dart';
+import 'package:bid/src/widgets/create_game_widget.dart';
 import 'package:bid/src/widgets/scoreboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as material;
@@ -37,18 +38,26 @@ class MyHomePage extends StatelessWidget {
           child: const Text('Bid Your Tricks'),
         ),
       ),
-      body: StoreConnector<BidState, Game>(
+      body: StoreConnector<BidState, Game?>(
         converter: (store) => store.state.game,
-        builder: (context, game) => ListView(
-          children: [
-            ScoreboardWidget(
-              game.scoreboard,
-              {for (final p in game.players) p.id: p},
-            ),
-            GameInput(game),
-          ],
-        ),
+        builder: _buildPage,
       ),
+    );
+  }
+
+  Widget _buildPage(BuildContext context, Game? game) {
+    if (game == null) {
+      return CreateGameWidget();
+    }
+
+    return ListView(
+      children: [
+        ScoreboardWidget(
+          game.scoreboard,
+          {for (final p in game.players) p.id: p},
+        ),
+        GameInput(game),
+      ],
     );
   }
 }

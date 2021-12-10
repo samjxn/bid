@@ -13,7 +13,7 @@ BidState _setBid(BidState state, SetBid action) {
   final stateBuilder = state.toBuilder();
   final player = action.bidder;
 
-  final scoreboardState = state.game.scoreboard;
+  final scoreboardState = state.game!.scoreboard;
   final playerScores = scoreboardState.scoreboard[player.id]?.toBuilder();
 
   if (playerScores == null) {
@@ -31,7 +31,7 @@ BidState _setBid(BidState state, SetBid action) {
 
 BidState _setPlayersTrickCounts(BidState state, SetPlayersTrickCounts action) {
   final stateBuilder = state.toBuilder();
-  final scoreboardState = state.game.scoreboard;
+  final scoreboardState = state.game!.scoreboard;
   final playersToTricks = action.playersToTricks;
 
   for (final player in action.playersToTricks.keys) {
@@ -53,8 +53,8 @@ BidState _setPlayersTrickCounts(BidState state, SetPlayersTrickCounts action) {
 BidState _prepareNextRow(BidState state, PrepareNextRow _) {
   final stateBuilder = state.toBuilder();
 
-  final scoreboardState = state.game.scoreboard;
-  for (final player in state.game.players) {
+  final scoreboardState = state.game!.scoreboard;
+  for (final player in state.game!.players) {
     final playerScores = scoreboardState.scoreboard[player.id]?.toBuilder();
     if (playerScores == null) continue;
 

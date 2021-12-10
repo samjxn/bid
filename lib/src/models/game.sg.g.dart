@@ -17,6 +17,7 @@ class _$Game extends Game {
   final int? bidderIndex;
   @override
   final int round;
+  int? __hand;
 
   factory _$Game([void Function(GameBuilder)? updates]) =>
       (new GameBuilder()..update(updates)).build();
@@ -33,6 +34,9 @@ class _$Game extends Game {
     BuiltValueNullFieldError.checkNotNull(dealerIndex, 'Game', 'dealerIndex');
     BuiltValueNullFieldError.checkNotNull(round, 'Game', 'round');
   }
+
+  @override
+  int get hand => __hand ??= super.hand;
 
   @override
   Game rebuild(void Function(GameBuilder) updates) =>

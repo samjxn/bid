@@ -32,9 +32,7 @@ abstract class Game implements Built<Game, GameBuilder> {
 
   Game._();
 
-  factory Game(List<Player> players, {required Player dealer}) {
-    final dealerPosition = max(players.indexOf(dealer), 0);
-
+  factory Game(List<Player> players, {required int dealerPosition}) {
     return _$Game((GameBuilder b) => b
       ..scoreboard = Scoreboard(players.map((e) => e.id)).toBuilder()
       ..players = ListBuilder(players)
