@@ -43,12 +43,12 @@ class ScoreboardWidget extends StatelessWidget {
               ),
             ]);
     for (final mapEntry in _scoreboard.scoreboard.entries) {
-      final playerScores = mapEntry.value;
-      for (final e in enumerate(playerScores)) {
+      final playerScores = enumerate(mapEntry.value).toList();
+      for (final e in playerScores) {
         final rowNum = e.index;
         final scoreEntry = e.value;
         rowChildren[rowNum].add(
-          ScoreboardItem(scoreEntry),
+          ScoreboardItem(scoreEntry, isLast: e == playerScores.last),
         );
       }
     }

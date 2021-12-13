@@ -9,13 +9,17 @@ part of 'scoreboard.sg.dart';
 class _$Scoreboard extends Scoreboard {
   @override
   final BuiltMap<String, BuiltList<ScoreboardEntry>> scoreboard;
+  @override
+  final int bidCount;
 
   factory _$Scoreboard([void Function(ScoreboardBuilder)? updates]) =>
       (new ScoreboardBuilder()..update(updates)).build();
 
-  _$Scoreboard._({required this.scoreboard}) : super._() {
+  _$Scoreboard._({required this.scoreboard, required this.bidCount})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(
         scoreboard, 'Scoreboard', 'scoreboard');
+    BuiltValueNullFieldError.checkNotNull(bidCount, 'Scoreboard', 'bidCount');
   }
 
   @override
@@ -28,18 +32,21 @@ class _$Scoreboard extends Scoreboard {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Scoreboard && scoreboard == other.scoreboard;
+    return other is Scoreboard &&
+        scoreboard == other.scoreboard &&
+        bidCount == other.bidCount;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, scoreboard.hashCode));
+    return $jf($jc($jc(0, scoreboard.hashCode), bidCount.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Scoreboard')
-          ..add('scoreboard', scoreboard))
+          ..add('scoreboard', scoreboard)
+          ..add('bidCount', bidCount))
         .toString();
   }
 }
@@ -54,12 +61,17 @@ class ScoreboardBuilder implements Builder<Scoreboard, ScoreboardBuilder> {
   set scoreboard(MapBuilder<String, BuiltList<ScoreboardEntry>>? scoreboard) =>
       _$this._scoreboard = scoreboard;
 
+  int? _bidCount;
+  int? get bidCount => _$this._bidCount;
+  set bidCount(int? bidCount) => _$this._bidCount = bidCount;
+
   ScoreboardBuilder();
 
   ScoreboardBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _scoreboard = $v.scoreboard.toBuilder();
+      _bidCount = $v.bidCount;
       _$v = null;
     }
     return this;
@@ -80,7 +92,11 @@ class ScoreboardBuilder implements Builder<Scoreboard, ScoreboardBuilder> {
   _$Scoreboard build() {
     _$Scoreboard _$result;
     try {
-      _$result = _$v ?? new _$Scoreboard._(scoreboard: scoreboard.build());
+      _$result = _$v ??
+          new _$Scoreboard._(
+              scoreboard: scoreboard.build(),
+              bidCount: BuiltValueNullFieldError.checkNotNull(
+                  bidCount, 'Scoreboard', 'bidCount'));
     } catch (_) {
       late String _$failedField;
       try {

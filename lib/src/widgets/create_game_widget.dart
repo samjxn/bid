@@ -33,7 +33,7 @@ class CreateGameWidgetState extends State<CreateGameWidget> {
   }
 
   Widget _toNameInput(int index, TextEditingController controller) {
-    return Row(children: [
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
         child: SizedBox(
@@ -48,24 +48,31 @@ class CreateGameWidgetState extends State<CreateGameWidget> {
           ),
         ),
       ),
-      _renderMakeDealerButton(index),
-      if (index == _numPlayers - 1 && _numPlayers > 4)
-        _renderDeleteButton(index),
+      Column(
+        children: [
+          _renderMakeDealerButton(index),
+          if (index == _numPlayers - 1 && _numPlayers > 4)
+            _renderDeleteButton(index),
+        ],
+      )
     ]);
   }
 
   Widget _renderDeleteButton(int playerIndex) {
-    return ElevatedButton.icon(
-      onPressed: () {
-        setState(() {
-          _playerIndexToName.remove(playerIndex);
-          if (_dealerIndex == playerIndex) {
-            _dealerIndex = _numPlayers - 1;
-          }
-        });
-      },
-      icon: const Icon(Icons.remove),
-      label: const Text('Remove Player'),
+    return Container(
+      padding: const EdgeInsets.only(left: 4.0),
+      child: ElevatedButton.icon(
+        onPressed: () {
+          setState(() {
+            _playerIndexToName.remove(playerIndex);
+            if (_dealerIndex == playerIndex) {
+              _dealerIndex = _numPlayers - 1;
+            }
+          });
+        },
+        icon: const Icon(Icons.remove),
+        label: const Text('Remove Player'),
+      ),
     );
   }
 
@@ -86,14 +93,18 @@ class CreateGameWidgetState extends State<CreateGameWidget> {
   }
 
   Widget _renderButtons() {
+    final has7 = _playerIndexToName.length == 7;
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton.icon(
-          onPressed: () {
-            setState(() {
-              _playerIndexToName[_numPlayers] = TextEditingController();
-            });
-          },
+          onPressed: has7
+              ? null
+              : () {
+                  setState(() {
+                    _playerIndexToName[_numPlayers] = TextEditingController();
+                  });
+                },
           label: const Text('Add Player'),
           icon: const Icon(Icons.person_add),
         ),

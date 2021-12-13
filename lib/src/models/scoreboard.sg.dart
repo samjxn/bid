@@ -8,9 +8,13 @@ abstract class Scoreboard implements Built<Scoreboard, ScoreboardBuilder> {
 
   Scoreboard._();
 
+  int get bidCount;
+
   factory Scoreboard(Iterable<String> playerIds) =>
       _$Scoreboard((ScoreboardBuilder b) {
-        b.scoreboard = MapBuilder<String, BuiltList<ScoreboardEntry>>();
+        b
+          ..scoreboard = MapBuilder<String, BuiltList<ScoreboardEntry>>()
+          ..bidCount = 0;
 
         final idsToItems = <String, ListBuilder<ScoreboardEntry>>{};
         for (final playerId in playerIds) {

@@ -12,3 +12,15 @@ class NewGame {
 
   NewGame([this.players, this.dealerIndex]);
 }
+
+class SetRecentBid {
+  int? bid;
+
+  SetRecentBid([this.bid]);
+}
+
+class SetActionCompleter {
+  Future? actionFuture;
+
+  SetActionCompleter([this.actionFuture]);
+}

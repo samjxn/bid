@@ -15,6 +15,10 @@ abstract class Game implements Built<Game, GameBuilder> {
   int get dealerIndex;
   int? get bidderIndex;
 
+  Future<void>? get setBidCompleter;
+
+  int? get recentBid;
+
   int? get nextBidder {
     if (bidderIndex == dealerIndex) return null;
 

@@ -11,7 +11,10 @@ class ScoreboardItem extends StatelessWidget {
 
   bool get broke => tricks != null && bid != tricks;
 
-  const ScoreboardItem(this.entry, {Key? key}) : super(key: key);
+  final bool isLast;
+
+  const ScoreboardItem(this.entry, {Key? key, this.isLast = false})
+      : super(key: key);
 
   Widget _renderBidAndTricks() {
     return Row(
@@ -19,25 +22,36 @@ class ScoreboardItem extends StatelessWidget {
       children: [
         if (broke)
           Padding(
-            padding: const EdgeInsets.only(right: 1.5),
+            padding: const EdgeInsets.only(right: 2.0),
             child: Text(
               '$tricks',
-              style: const TextStyle(fontSize: 12.0, color: Colors.red),
+              style: const TextStyle(
+                fontSize: 12.0,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         if (bid != null)
           Padding(
-            padding: const EdgeInsets.only(right: 1.5),
+            padding: const EdgeInsets.only(right: 4.0),
             child: Text(
               '$bid',
               style: TextStyle(
                 fontSize: 12.0,
+                fontWeight: broke ? null : FontWeight.bold,
                 decoration: broke ? TextDecoration.lineThrough : null,
-                color: broke ? null : Colors.green,
               ),
             ),
           ),
       ],
+    );
+  }
+
+  Widget _renderScore() {
+    return Text(
+      '${entry.score}',
+      style: isLast ? const TextStyle(fontWeight: FontWeight.bold) : null,
     );
   }
 
@@ -64,15 +78,14 @@ class ScoreboardItem extends StatelessWidget {
                         width: 30,
                         height: 30,
                         child: Container(
-                          padding: const EdgeInsets.all(2.0),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.red),
-                          ),
-                          child: Center(child: Text('${entry.score}')),
-                        ),
+                            padding: const EdgeInsets.all(2.0),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.red, width: 2.0),
+                            ),
+                            child: Center(child: _renderScore())),
                       ),
-                    if (!broke && entry.tricks != null) Text('${entry.score}'),
+                    if (!broke && entry.tricks != null) _renderScore(),
                   ],
                 ),
               ),

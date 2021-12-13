@@ -49,7 +49,11 @@ void _onNextHand(Store<BidState> store, NextHand action, NextDispatcher next) {
 }
 
 void _onUpdateBidder(
-    Store<BidState> store, UpdateBidder action, NextDispatcher next) {
+    Store<BidState> store, UpdateBidder action, NextDispatcher next) async {
+  if (store.state.game!.setBidCompleter != null) {
+    await store.state.game!.setBidCompleter;
+  }
+
   if (store.state.game!.nextBidder == null) {
     store.dispatch(SetPlayersTrickCounts({
       for (final player in store.state.game!.players)

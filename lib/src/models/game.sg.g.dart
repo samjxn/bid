@@ -16,6 +16,10 @@ class _$Game extends Game {
   @override
   final int? bidderIndex;
   @override
+  final Future<void>? setBidCompleter;
+  @override
+  final int? recentBid;
+  @override
   final int round;
   int? __hand;
 
@@ -27,6 +31,8 @@ class _$Game extends Game {
       required this.players,
       required this.dealerIndex,
       this.bidderIndex,
+      this.setBidCompleter,
+      this.recentBid,
       required this.round})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(scoreboard, 'Game', 'scoreboard');
@@ -53,6 +59,8 @@ class _$Game extends Game {
         players == other.players &&
         dealerIndex == other.dealerIndex &&
         bidderIndex == other.bidderIndex &&
+        setBidCompleter == other.setBidCompleter &&
+        recentBid == other.recentBid &&
         round == other.round;
   }
 
@@ -60,9 +68,13 @@ class _$Game extends Game {
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc(0, scoreboard.hashCode), players.hashCode),
-                dealerIndex.hashCode),
-            bidderIndex.hashCode),
+            $jc(
+                $jc(
+                    $jc($jc($jc(0, scoreboard.hashCode), players.hashCode),
+                        dealerIndex.hashCode),
+                    bidderIndex.hashCode),
+                setBidCompleter.hashCode),
+            recentBid.hashCode),
         round.hashCode));
   }
 
@@ -73,6 +85,8 @@ class _$Game extends Game {
           ..add('players', players)
           ..add('dealerIndex', dealerIndex)
           ..add('bidderIndex', bidderIndex)
+          ..add('setBidCompleter', setBidCompleter)
+          ..add('recentBid', recentBid)
           ..add('round', round))
         .toString();
   }
@@ -100,6 +114,15 @@ class GameBuilder implements Builder<Game, GameBuilder> {
   int? get bidderIndex => _$this._bidderIndex;
   set bidderIndex(int? bidderIndex) => _$this._bidderIndex = bidderIndex;
 
+  Future<void>? _setBidCompleter;
+  Future<void>? get setBidCompleter => _$this._setBidCompleter;
+  set setBidCompleter(Future<void>? setBidCompleter) =>
+      _$this._setBidCompleter = setBidCompleter;
+
+  int? _recentBid;
+  int? get recentBid => _$this._recentBid;
+  set recentBid(int? recentBid) => _$this._recentBid = recentBid;
+
   int? _round;
   int? get round => _$this._round;
   set round(int? round) => _$this._round = round;
@@ -113,6 +136,8 @@ class GameBuilder implements Builder<Game, GameBuilder> {
       _players = $v.players.toBuilder();
       _dealerIndex = $v.dealerIndex;
       _bidderIndex = $v.bidderIndex;
+      _setBidCompleter = $v.setBidCompleter;
+      _recentBid = $v.recentBid;
       _round = $v.round;
       _$v = null;
     }
@@ -141,6 +166,8 @@ class GameBuilder implements Builder<Game, GameBuilder> {
               dealerIndex: BuiltValueNullFieldError.checkNotNull(
                   dealerIndex, 'Game', 'dealerIndex'),
               bidderIndex: bidderIndex,
+              setBidCompleter: setBidCompleter,
+              recentBid: recentBid,
               round: BuiltValueNullFieldError.checkNotNull(
                   round, 'Game', 'round'));
     } catch (_) {

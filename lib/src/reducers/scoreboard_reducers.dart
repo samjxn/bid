@@ -16,6 +16,9 @@ BidState _setBid(BidState state, SetBid action) {
   final scoreboardState = state.game!.scoreboard;
   final playerScores = scoreboardState.scoreboard[player.id]?.toBuilder();
 
+  stateBuilder.game.scoreboard.bidCount =
+      state.game!.scoreboard.bidCount + action.bid;
+
   if (playerScores == null) {
     throw StateError('Player scores not found: ${player.name}');
   }
@@ -52,6 +55,8 @@ BidState _setPlayersTrickCounts(BidState state, SetPlayersTrickCounts action) {
 
 BidState _prepareNextRow(BidState state, PrepareNextRow _) {
   final stateBuilder = state.toBuilder();
+
+  stateBuilder.game.scoreboard.bidCount = 0;
 
   final scoreboardState = state.game!.scoreboard;
   for (final player in state.game!.players) {

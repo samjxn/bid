@@ -24,14 +24,16 @@ class GameInput extends StatelessWidget {
     ]);
   }
 
-  Widget _renderBidButtons() {
+  List<Widget> _renderBidButtons() {
     final maxBid = game.hand;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        for (var i = 1; i <= maxBid; i++) _renderBidButton(i),
-      ],
-    );
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          for (var i = 1; i <= maxBid; i++) _renderBidButton(i),
+        ],
+      ),
+    ];
   }
 
   Widget _renderBidButton(int bid) {
@@ -50,7 +52,8 @@ class GameInput extends StatelessWidget {
       }
     }
 
-    var isDisabled = disallowedBid != null && bid == disallowedBid;
+    final isDisabled =
+        bid == game.recentBid || disallowedBid != null && bid == disallowedBid;
 
     return Container(
       padding: const EdgeInsets.all(8.0),
@@ -77,9 +80,13 @@ class GameInput extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text('Bid for: $playerName'),
+        Text('Bid for: $playerName', style: const TextStyle(fontSize: 32.0)),
+        Text(
+          'Tricks claimed: ${game.scoreboard.bidCount} of ${game.hand}',
+          style: const TextStyle(fontSize: 24.0),
+        ),
         _renderBidButton(0),
-        _renderBidButtons(),
+        ..._renderBidButtons(),
       ],
     );
   }

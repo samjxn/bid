@@ -47,17 +47,20 @@ class MyHomePage extends StatelessWidget {
 
   Widget _buildPage(BuildContext context, Game? game) {
     if (game == null) {
-      return CreateGameWidget();
+      return const CreateGameWidget();
     }
 
-    return ListView(
-      children: [
-        ScoreboardWidget(
-          game.scoreboard,
-          {for (final p in game.players) p.id: p},
-        ),
-        GameInput(game),
-      ],
+    return Container(
+      padding: const EdgeInsets.all(4.0),
+      child: ListView(
+        children: [
+          ScoreboardWidget(
+            game.scoreboard,
+            {for (final p in game.players) p.id: p},
+          ),
+          GameInput(game),
+        ],
+      ),
     );
   }
 }
