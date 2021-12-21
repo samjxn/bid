@@ -8,15 +8,24 @@ abstract class Scoreboard implements Built<Scoreboard, ScoreboardBuilder> {
 
   Scoreboard._();
 
-  int get bidCount;
+  @memoized
+  int get bidCount {
+    return scoreboard.values.fold<int>(
+      0,
+      (previousValue, playerScores) =>
+          (playerScores.last.bid ?? 0) + previousValue,
+    );
+  }
+
+  @memoized
+  BuiltList<ScoreboardEntry> get lastRow => scoreboard.values
+      .map<ScoreboardEntry>((scoreList) => scoreList.last)
+      .toBuiltList();
 
   factory Scoreboard(Iterable<String> playerIds) =>
       _$Scoreboard((ScoreboardBuilder b) {
-        b
-          ..scoreboard = MapBuilder<String, BuiltList<ScoreboardEntry>>()
-          ..bidCount = 0;
+        b.scoreboard = MapBuilder<String, BuiltList<ScoreboardEntry>>();
 
-        final idsToItems = <String, ListBuilder<ScoreboardEntry>>{};
         for (final playerId in playerIds) {
           b.scoreboard[playerId] =
               ListBuilder<ScoreboardEntry>([ScoreboardEntry()]).build();

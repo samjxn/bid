@@ -37,7 +37,8 @@ class GameInput extends StatelessWidget {
   }
 
   Widget _renderBidButton(int bid) {
-    final bidder = game.players[game.bidderIndex!];
+    final bidder =
+        game.bidderIndex == null ? null : game.players[game.bidderIndex!];
 
     final isDealer = game.bidderIndex == game.dealerIndex;
 
@@ -52,14 +53,15 @@ class GameInput extends StatelessWidget {
       }
     }
 
-    final isDisabled =
-        bid == game.recentBid || disallowedBid != null && bid == disallowedBid;
+    final isDisabled = bidder == null ||
+        disallowedBid != null && bid == disallowedBid ||
+        game.status == GameStatus.postBidding;
 
     return Container(
       padding: const EdgeInsets.all(8.0),
       child: StoreConnector<BidState, void Function()>(
         converter: (store) => () {
-          store.dispatch(SetBid(bidder, bid));
+          store.dispatch(SetBid(bidder!, bid));
           store.dispatch(UpdateBidder());
         },
         builder: (context, callback) => ElevatedButton(
@@ -73,22 +75,71 @@ class GameInput extends StatelessWidget {
     );
   }
 
+  Widget _renderProgressionButtons() {
+    final backEnabled = game.previousBidder != null;
+    final continueEnabled = game.status == GameStatus.postBidding;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        StoreConnector<BidState, void Function()>(
+          builder: (context, callback) {
+            return ElevatedButton.icon(
+              onPressed: backEnabled ? callback : null,
+              icon: const Icon(Icons.arrow_back),
+              label: const Text('Back'),
+            );
+          },
+          converter: (store) => () {
+            store.dispatch(PreviousBidder());
+          },
+        ),
+        StoreConnector<BidState, void Function()>(
+          builder: (context, callback) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: ElevatedButton.icon(
+                onPressed: continueEnabled ? callback : null,
+                icon: const Icon(Icons.arrow_forward),
+                label: const Text('Continue'),
+              ),
+            );
+          },
+          converter: (store) => () {
+            store.dispatch(StartTricking());
+          },
+        ),
+      ],
+    );
+  }
+
   Widget _renderBiddingInput() {
-    assert(game.bidderIndex != null);
-    final playerName = game.players[game.bidderIndex!].name;
+    final playerName =
+        game.bidderIndex == null ? null : game.players[game.bidderIndex!].name;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text('Bid for: $playerName', style: const TextStyle(fontSize: 32.0)),
+        if (playerName != null)
+          Text('Bid for: $playerName', style: const TextStyle(fontSize: 32.0)),
+        if (playerName == null)
+          const Text('Confirm Bids', style: TextStyle(fontSize: 32.0)),
         Text(
           'Tricks claimed: ${game.scoreboard.bidCount} of ${game.hand}',
           style: const TextStyle(fontSize: 24.0),
         ),
-        _renderBidButton(0),
-        ..._renderBidButtons(),
+        ..._renderPlayerInput(),
+        _renderProgressionButtons(),
       ],
     );
+  }
+
+  List<Widget> _renderPlayerInput() {
+    return [
+      _renderBidButton(0),
+      ..._renderBidButtons(),
+    ];
   }
 
   Widget _renderTrickInput() {

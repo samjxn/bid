@@ -9,18 +9,22 @@ part of 'scoreboard.sg.dart';
 class _$Scoreboard extends Scoreboard {
   @override
   final BuiltMap<String, BuiltList<ScoreboardEntry>> scoreboard;
-  @override
-  final int bidCount;
+  int? __bidCount;
+  BuiltList<ScoreboardEntry>? __lastRow;
 
   factory _$Scoreboard([void Function(ScoreboardBuilder)? updates]) =>
       (new ScoreboardBuilder()..update(updates)).build();
 
-  _$Scoreboard._({required this.scoreboard, required this.bidCount})
-      : super._() {
+  _$Scoreboard._({required this.scoreboard}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         scoreboard, 'Scoreboard', 'scoreboard');
-    BuiltValueNullFieldError.checkNotNull(bidCount, 'Scoreboard', 'bidCount');
   }
+
+  @override
+  int get bidCount => __bidCount ??= super.bidCount;
+
+  @override
+  BuiltList<ScoreboardEntry> get lastRow => __lastRow ??= super.lastRow;
 
   @override
   Scoreboard rebuild(void Function(ScoreboardBuilder) updates) =>
@@ -32,21 +36,18 @@ class _$Scoreboard extends Scoreboard {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Scoreboard &&
-        scoreboard == other.scoreboard &&
-        bidCount == other.bidCount;
+    return other is Scoreboard && scoreboard == other.scoreboard;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, scoreboard.hashCode), bidCount.hashCode));
+    return $jf($jc(0, scoreboard.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Scoreboard')
-          ..add('scoreboard', scoreboard)
-          ..add('bidCount', bidCount))
+          ..add('scoreboard', scoreboard))
         .toString();
   }
 }
@@ -61,17 +62,12 @@ class ScoreboardBuilder implements Builder<Scoreboard, ScoreboardBuilder> {
   set scoreboard(MapBuilder<String, BuiltList<ScoreboardEntry>>? scoreboard) =>
       _$this._scoreboard = scoreboard;
 
-  int? _bidCount;
-  int? get bidCount => _$this._bidCount;
-  set bidCount(int? bidCount) => _$this._bidCount = bidCount;
-
   ScoreboardBuilder();
 
   ScoreboardBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _scoreboard = $v.scoreboard.toBuilder();
-      _bidCount = $v.bidCount;
       _$v = null;
     }
     return this;
@@ -92,11 +88,7 @@ class ScoreboardBuilder implements Builder<Scoreboard, ScoreboardBuilder> {
   _$Scoreboard build() {
     _$Scoreboard _$result;
     try {
-      _$result = _$v ??
-          new _$Scoreboard._(
-              scoreboard: scoreboard.build(),
-              bidCount: BuiltValueNullFieldError.checkNotNull(
-                  bidCount, 'Scoreboard', 'bidCount'));
+      _$result = _$v ?? new _$Scoreboard._(scoreboard: scoreboard.build());
     } catch (_) {
       late String _$failedField;
       try {

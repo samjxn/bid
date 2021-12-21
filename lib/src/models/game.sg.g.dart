@@ -18,9 +18,15 @@ class _$Game extends Game {
   @override
   final Future<void>? setBidCompleter;
   @override
-  final int? recentBid;
+  final GameStatus status;
   @override
   final int round;
+  int? __nextBidder;
+  bool ___nextBidder = false;
+  int? __previousBidder;
+  bool ___previousBidder = false;
+  int? __nextDealer;
+  bool? __isBidding;
   int? __hand;
 
   factory _$Game([void Function(GameBuilder)? updates]) =>
@@ -32,14 +38,39 @@ class _$Game extends Game {
       required this.dealerIndex,
       this.bidderIndex,
       this.setBidCompleter,
-      this.recentBid,
+      required this.status,
       required this.round})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(scoreboard, 'Game', 'scoreboard');
     BuiltValueNullFieldError.checkNotNull(players, 'Game', 'players');
     BuiltValueNullFieldError.checkNotNull(dealerIndex, 'Game', 'dealerIndex');
+    BuiltValueNullFieldError.checkNotNull(status, 'Game', 'status');
     BuiltValueNullFieldError.checkNotNull(round, 'Game', 'round');
   }
+
+  @override
+  int? get nextBidder {
+    if (!___nextBidder) {
+      __nextBidder = super.nextBidder;
+      ___nextBidder = true;
+    }
+    return __nextBidder;
+  }
+
+  @override
+  int? get previousBidder {
+    if (!___previousBidder) {
+      __previousBidder = super.previousBidder;
+      ___previousBidder = true;
+    }
+    return __previousBidder;
+  }
+
+  @override
+  int get nextDealer => __nextDealer ??= super.nextDealer;
+
+  @override
+  bool get isBidding => __isBidding ??= super.isBidding;
 
   @override
   int get hand => __hand ??= super.hand;
@@ -60,7 +91,7 @@ class _$Game extends Game {
         dealerIndex == other.dealerIndex &&
         bidderIndex == other.bidderIndex &&
         setBidCompleter == other.setBidCompleter &&
-        recentBid == other.recentBid &&
+        status == other.status &&
         round == other.round;
   }
 
@@ -74,7 +105,7 @@ class _$Game extends Game {
                         dealerIndex.hashCode),
                     bidderIndex.hashCode),
                 setBidCompleter.hashCode),
-            recentBid.hashCode),
+            status.hashCode),
         round.hashCode));
   }
 
@@ -86,7 +117,7 @@ class _$Game extends Game {
           ..add('dealerIndex', dealerIndex)
           ..add('bidderIndex', bidderIndex)
           ..add('setBidCompleter', setBidCompleter)
-          ..add('recentBid', recentBid)
+          ..add('status', status)
           ..add('round', round))
         .toString();
   }
@@ -119,9 +150,9 @@ class GameBuilder implements Builder<Game, GameBuilder> {
   set setBidCompleter(Future<void>? setBidCompleter) =>
       _$this._setBidCompleter = setBidCompleter;
 
-  int? _recentBid;
-  int? get recentBid => _$this._recentBid;
-  set recentBid(int? recentBid) => _$this._recentBid = recentBid;
+  GameStatus? _status;
+  GameStatus? get status => _$this._status;
+  set status(GameStatus? status) => _$this._status = status;
 
   int? _round;
   int? get round => _$this._round;
@@ -137,7 +168,7 @@ class GameBuilder implements Builder<Game, GameBuilder> {
       _dealerIndex = $v.dealerIndex;
       _bidderIndex = $v.bidderIndex;
       _setBidCompleter = $v.setBidCompleter;
-      _recentBid = $v.recentBid;
+      _status = $v.status;
       _round = $v.round;
       _$v = null;
     }
@@ -167,7 +198,8 @@ class GameBuilder implements Builder<Game, GameBuilder> {
                   dealerIndex, 'Game', 'dealerIndex'),
               bidderIndex: bidderIndex,
               setBidCompleter: setBidCompleter,
-              recentBid: recentBid,
+              status: BuiltValueNullFieldError.checkNotNull(
+                  status, 'Game', 'status'),
               round: BuiltValueNullFieldError.checkNotNull(
                   round, 'Game', 'round'));
     } catch (_) {

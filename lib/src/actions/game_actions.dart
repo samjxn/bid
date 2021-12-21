@@ -2,7 +2,11 @@ import 'package:bid/src/models/player.sg.dart';
 
 class UpdateBidder {}
 
+class PreviousBidder {}
+
 class UpdateDealer {}
+
+class StartTricking {}
 
 class NextHand {}
 
