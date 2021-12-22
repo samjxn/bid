@@ -1,16 +1,5 @@
 # bid
 
-A new Flutter project.
+A "Bid Your Tricks" game! Bid Your Tricks is a modification of ["Up and Down the River"](https://en.wikipedia.org/wiki/Oh_Hell#Up_and_Down_the_River) (which is, in and of itself, a modification of ["Oh Hell"](https://en.wikipedia.org/wiki/Oh_Hell)).
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Currently, this game just supports a scoreboard. Implementaion of a full correspondence game of Bid Your Tricks is on the roadmap.
